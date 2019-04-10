@@ -1,37 +1,24 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from "react";
+import AppContext from "./AppContext";
+import Todos from "./Todos";
+import AddTodo from "./AddTodo";
+import "./App.css";
 
 const reducer = (oldState = {}, newState) => {
-  return {...oldState, newState}
-}
+  console.log(oldState);
+  return { ...oldState, ...newState };
+};
 
-const createStore = (reducer) => {
-  let state;
-  
-  const getState = () => state
+const App = () => {
+  const initialState = { todos: [] };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const dispatch = (action) => {
-    state = reducer(state, action)
-  }
-
-  return {getState, dispatch}
-}
-
-const store = createStore();
-
-const StoreContext =  React.createContext({});
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <StoreContext.Provider value={store}>
-          Hallo
-        </StoreContext.Provider>
-      </div>
-    );
-  }
-}
+  return (
+    <AppContext.Provider value={{ state, dispatch }}>
+      <Todos />
+      <AddTodo />
+    </AppContext.Provider>
+  );
+};
 
 export default App;
