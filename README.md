@@ -1,1 +1,1 @@
-Usage of hooks as rudimentary replacement for redux.
+Usage of useContext hook as rudimentary replacement for redux.
